@@ -16,9 +16,7 @@ class HackAssembler():
         instructions = self.read_from_file(file_path)
         instructions = [self.remove_comments(self.remove_whitespace(instruction)) for instruction in instructions]
         instructions = [instruction for instruction in instructions if instruction]
-        print(instructions)
         instructions = self.attach_symbols(instructions)
-        print(instructions)
         instructions = [self.convert_instruction(instruction) for instruction in instructions]
         return instructions
     
@@ -35,7 +33,6 @@ class HackAssembler():
             if instruction.startswith('('):
                 symbol_table[instruction[1:-1]] = i - label_count
                 label_count += 1
-        print(symbol_table)
         instructions = [instruction for instruction in instructions if not instruction.startswith('(')]
         for i, instruction in enumerate(instructions):
             if instruction.startswith('@') and not instruction[1:].isdigit():
@@ -83,4 +80,8 @@ class HackAssembler():
 if __name__ == '__main__':
     assembler = HackAssembler("settings/hack_language_reference.json")
     #print(assembler.assemble("Prog.asm"))
-    print(assembler.assemble_to_file("Prog.asm", "Prog.hack"))
+    assembler.assemble_to_file("examples/Add.asm", "examples/Add.hack")
+    assembler.assemble_to_file("examples/Max.asm", "examples/Max.hack")
+    assembler.assemble_to_file("examples/Pong.asm", "examples/Pong.hack")
+    assembler.assemble_to_file("examples/Rect.asm", "examples/Rect.hack")
+
