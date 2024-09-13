@@ -1,0 +1,14 @@
+@R0
+D=M
+
+(LOOP)
+@END
+D;JGT
+
+D=D-1
+@LOOP
+D;JMP
+
+(END)
+@END
+0;JMP
