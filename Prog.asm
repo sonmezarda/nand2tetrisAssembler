@@ -1,14 +1,43 @@
-@R0
-D=M
-
 (LOOP)
-@END
-D;JGT
-
-D=D-1
-@LOOP
-D;JMP
-
-(END)
-@END
-0;JMP
+    @KBD 
+    D=M 
+    @BLACK
+    D;JGT
+    @WHITE
+    0;JMP
+(BLACK)
+    @R0
+    M=-1
+    @DRAW
+    0;JMP
+(WHITE)
+    @R0 
+    M=0
+    @DRAW 
+    0;JMP 
+(DRAW)
+    @8191
+    D=A
+    @R1
+    M=D
+    (NEXT)
+        @R1
+        D=M
+        @pos
+        M=D
+        @SCREEN 
+        D=A
+        @pos
+        M=D+M
+        @R0
+        D=M
+        @pos
+        A=M
+        M=D
+        @R1
+        D=M-1
+        M=D
+        @NEXT
+        D;JGE
+    @LOOP
+    0;JMP

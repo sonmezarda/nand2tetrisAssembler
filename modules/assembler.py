@@ -29,17 +29,20 @@ class HackAssembler():
 
     def attach_symbols(self, instructions):
         label_count = 0
+        added_symbol_count = 0
         symbol_table = self.defined_symbols
         for i, instruction in enumerate(instructions):
             if instruction.startswith('('):
                 symbol_table[instruction[1:-1]] = i - label_count
                 label_count += 1
+        print(symbol_table)
         instructions = [instruction for instruction in instructions if not instruction.startswith('(')]
         for i, instruction in enumerate(instructions):
             if instruction.startswith('@') and not instruction[1:].isdigit():
                 symbol = instruction[1:]
                 if symbol not in symbol_table:
-                    symbol_table[symbol] = len(symbol_table) + 16
+                    symbol_table[symbol] = added_symbol_count + 16
+                    added_symbol_count += 1
                 instructions[i] = '@' + str(symbol_table[symbol])
         return instructions
     
